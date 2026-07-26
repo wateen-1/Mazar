@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- خلفية شاشة الإطلاق الأصلية (Native Launch Background)، تظهر لجزء من
+     الثانية قبل أن يرسم محرك Flutter أول إطار، ثم قبل ظهور splash_screen.dart
+     الفعلي. استُخدم هنا نفس لون AppColors.navyDark (0xFF0B1522) من الهوية
+     البصرية للتطبيق لضمان انتقال بصري سلس بلا "وميض" لوني بين الشاشتين. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <color android:color="#FF0B1522" />
+    </item>
+</layer-list>

@@ -1,0 +1,16 @@
+// يربط هذا الملف وحدة app/ بمشروع Gradle الجذري، ويحمّل سكربت الإقلاع
+// الخاص بمكوّن Flutter Gradle Plugin (app_plugin_loader.gradle) الذي يجلب
+// بدوره ملف android/app/build.gradle الفعلي ضمن سياق يفهم اعتماديات
+// Flutter ووحدات الإضافات (plugins) المستخدمة في pubspec.yaml.
+
+include ':app'
+
+def localPropertiesFile = new File(rootProject.projectDir, "local.properties")
+def properties = new Properties()
+
+assert localPropertiesFile.exists()
+localPropertiesFile.withReader("UTF-8") { reader -> properties.load(reader) }
+
+def flutterSdkPath = properties.getProperty("flutter.sdk")
+assert flutterSdkPath != null, "flutter.sdk not set in local.properties. شغّل flutter pub get مرة واحدة داخل flutter_app/ لإعادة توليد الملف تلقائياً."
+apply from: "$flutterSdkPath/packages/flutter_tools/gradle/app_plugin_loader.gradle"

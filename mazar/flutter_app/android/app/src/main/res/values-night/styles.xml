@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- نسخة الثيمات الخاصة بالوضع الليلي (Dark Mode)، تُطبَّق تلقائياً عندما
+     يكون نظام الجهاز في الوضع الداكن، بما يتوافق مع ThemeMode.system
+     المضبوط في lib/app.dart -->
+<resources>
+    <style name="LaunchTheme" parent="@android:style/Theme.Black.NoTitleBar">
+        <item name="android:windowBackground">@drawable/launch_background</item>
+    </style>
+
+    <style name="NormalTheme" parent="@android:style/Theme.Black.NoTitleBar">
+        <item name="android:windowBackground">#FF0B1522</item>
+    </style>
+</resources>

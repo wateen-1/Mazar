@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- الثيم المؤقت الذي يظهر فور فتح التطبيق قبل رسم أول إطار من Flutter -->
+    <style name="LaunchTheme" parent="@android:style/Theme.Black.NoTitleBar">
+        <item name="android:windowBackground">@drawable/launch_background</item>
+    </style>
+
+    <!-- الثيم العادي الذي يحل محل LaunchTheme فور جاهزية محرك Flutter لعرض
+         أول إطار فعلي من التطبيق (splash_screen.dart وما بعدها) -->
+    <style name="NormalTheme" parent="@android:style/Theme.Black.NoTitleBar">
+        <item name="android:windowBackground">@android:color/white</item>
+    </style>
+</resources>

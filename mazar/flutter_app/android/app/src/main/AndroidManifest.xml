@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    ملف بيان تطبيق أندرويد (Android Manifest) لتطبيق مزار — مُحدَّث بالكامل
+    لدعم Android v2 Embedding (لحل خطأ "Build failed due to use of deleted
+    Android v1 embedding").
+
+    أهم ما يضمن اعتماد v2 هنا:
+      1. <meta-data android:name="flutterEmbedding" android:value="2" /> داخل
+         <application> (أدناه) — هذه العلامة إلزامية؛ غيابها أو أي قيمة غير
+         "2" هو السبب المباشر الشائع لظهور رسالة الخطأ.
+      2. النشاط الرئيسي MainActivity يجب أن يمتد فعلياً من
+         io.flutter.embedding.android.FlutterActivity (v2) وليس من الصنف
+         القديم المحذوف io.flutter.app.FlutterActivity (v1) — تم التأكد من
+         ذلك في android/app/src/main/kotlin/com/mazar/app/MainActivity.kt.
+      3. <meta-data android:name="io.flutter.embedding.android.NormalTheme" .../>
+         داخل <activity> (أدناه) هو أيضاً جزء من مواصفات v2 القياسية.
+
+    لا حاجة لسمة android:package هنا؛ معرّف التطبيق (applicationId) ومساحة
+    الاسم (namespace) يُضبطان حصرياً من android/app/build.gradle حسب معيار
+    Android Gradle Plugin الحديث (8.x)، لتفادي أي تعارض بين الاثنين.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- إذن الإنترنت: ضروري للاتصال بخادم مزار (FastAPI) عبر Dio/http -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- أذونات الموقع الجغرافي: ضرورية لتفعيل المزارات التفاعلية ضمن
+         نطاق 100 متر، ولعرض موقع المستخدم على خريطة المزارات -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <application
+        android:label="مزار"
+        android:name="${applicationName}"
+        android:icon="@mipmap/ic_launcher">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:taskAffinity=""
+            android:theme="@style/LaunchTheme"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize">
+            <!-- شاشة الإطلاق الأصلية (Native Launch Theme) الخاصة بفلاتر، تظهر
+                 فوراً عند فتح التطبيق ريثما يجهّز محرك Flutter نفسه الودجات،
+                 قبل أن تُستبدل تلقائياً بثيم التطبيق العادي فور رسم أول إطار،
+                 ثم يظهر بعدها splash_screen.dart المُصمَّم داخل Flutter نفسه. -->
+            <meta-data
+                android:name="io.flutter.embedding.android.NormalTheme"
+                android:resource="@style/NormalTheme" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- علامة الانضمام الإلزامية لـ Android v2 Embedding. القيمة "2" هنا
+             هي ما يمنع خطأ "Build failed due to use of deleted Android v1
+             embedding" — أي قيمة غير هذه، أو غيابها كلياً، يعيد إنتاج الخطأ. -->
+        <meta-data
+            android:name="flutterEmbedding"
+            android:value="2" />
+
+        <!-- مفتاح خرائط Google: استبدل هذه القيمة الوهمية بمفتاحك الحقيقي قبل
+             النشر. يمكن أيضاً تمريره ديناميكياً عبر manifestPlaceholders في
+             app/build.gradle بدل التعديل هنا مباشرة. -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="YOUR_GOOGLE_MAPS_API_KEY_HERE" />
+    </application>
+
+    <!-- يسمح لتطبيق فلاتر باستعلام حزم أخرى ضرورية لبعض المكتبات (مثل url_launcher) -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.PROCESS_TEXT" />
+            <data android:mimeType="text/plain" />
+        </intent>
+    </queries>
+</manifest>

@@ -1,0 +1,39 @@
+// ملف Gradle على مستوى المشروع (Project-level) لتطبيق مزار.
+// يضبط مستودعات الاعتماديات ونسخة Android Gradle Plugin وKotlin المشتركة
+// بين المشروع الجذري ووحدة app/ الفرعية.
+
+buildscript {
+    ext.kotlin_version = '1.9.10'
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        // Android Gradle Plugin: يدعم Android v2 Embedding بالكامل ويطابق
+        // إصدار Gradle Wrapper المحدَّد في gradle/wrapper/gradle-wrapper.properties
+        classpath 'com.android.tools.build:gradle:8.1.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.buildDir = '../build'
+
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+
+subprojects {
+    project.evaluationDependsOn(':app')
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}

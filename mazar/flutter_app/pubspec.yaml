@@ -1,0 +1,79 @@
+name: mazar
+description: "مزار - تطبيق سياحة دينية ذكي يعتمد على الذكاء الاصطناعي والخرائط، لمرافقتك على خُطى الحبيب صلى الله عليه وسلم"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # ---------- إدارة الحالة (State Management) ----------
+  flutter_riverpod: ^2.5.1
+  riverpod_annotation: ^2.3.5
+
+  # ---------- إدارة النتائج والأخطاء بأسلوب البرمجة الوظيفية ----------
+  dartz: ^0.10.1
+  equatable: ^2.0.5
+
+  # ---------- الشبكة وربط الـ Backend ----------
+  dio: ^5.4.3+1
+  http: ^1.2.1
+  connectivity_plus: ^6.0.3
+
+  # ---------- الخرائط وتحديد الموقع الجغرافي (GPS) ----------
+  google_maps_flutter: ^2.6.1
+  geolocator: ^12.0.0
+  geocoding: ^3.0.0
+  permission_handler: ^11.3.1
+
+  # ---------- التصميم والواجهات ----------
+  google_fonts: ^6.2.1
+  flutter_svg: ^2.0.10+1
+  lottie: ^3.1.2
+  cached_network_image: ^3.3.1
+  shimmer: ^3.0.0
+
+  # ---------- التنقل بين الشاشات ----------
+  go_router: ^14.1.4
+
+  # ---------- فتح الروابط الخارجية (تجربة المزارات التفاعلية) ----------
+  url_launcher: ^6.3.0
+
+  # ---------- تخزين محلي ----------
+  shared_preferences: ^2.2.3
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+
+  # ---------- أدوات مساعدة ----------
+  intl: ^0.19.0
+  freezed_annotation: ^2.4.1
+  json_annotation: ^4.9.0
+  flutter_dotenv: ^5.1.0
+  logger: ^2.3.0
+
+  cupertino_icons: ^1.0.6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  build_runner: ^2.4.10
+  freezed: ^2.5.2
+  json_serializable: ^6.8.0
+  riverpod_generator: ^2.4.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/animations/
+    - .env
+
+  # ملاحظة: يستخدم المشروع خطوط Cairo و Amiri عبر حزمة google_fonts مباشرة
+  # (تُحمَّل تلقائياً عند أول تشغيل)، لذا لا حاجة لتضمين ملفات خطوط محلية هنا.
+  # إن رغبت باستخدام خطوط محلية بدلاً من ذلك، أضف قسم fonts هنا مع ملفات .ttf فعلية.

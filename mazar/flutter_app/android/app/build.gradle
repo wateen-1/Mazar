@@ -1,0 +1,77 @@
+// ملف Gradle الخاص بوحدة app/ لتطبيق مزار.
+// يضبط applicationId، إصدار SDK المستهدف، إعدادات Kotlin، ويربط سكربت
+// flutter.gradle الذي يوفر خصائص flutter.compileSdkVersion/targetSdkVersion/
+// ndkVersion المستخدمة أدناه، بالإضافة إلى دعم Android v2 Embedding تلقائياً
+// عبر اعتماديات io.flutter التي يضيفها هذا السكربت خلف الكواليس.
+
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
+def flutterRoot = localProperties.getProperty('flutter.sdk')
+if (flutterRoot == null) {
+    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+}
+
+def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
+if (flutterVersionCode == null) {
+    flutterVersionCode = '1'
+}
+
+def flutterVersionName = localProperties.getProperty('flutter.versionName')
+if (flutterVersionName == null) {
+    flutterVersionName = '1.0'
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+
+android {
+    namespace 'com.mazar.app'
+    compileSdk flutter.compileSdkVersion
+    ndkVersion flutter.ndkVersion
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    defaultConfig {
+        // معرّف التطبيق الفعلي على متجر Google Play / أجهزة أندرويد.
+        applicationId "com.mazar.app"
+        // الحد الأدنى 21 (بدل الافتراضي الأقل من Flutter) لأن حزمتي
+        // google_maps_flutter وgeolocator المستخدمتين في المشروع تتطلبان
+        // API 21 على الأقل لبعض ميزاتهما الحديثة.
+        minSdkVersion flutter.minSdkVersion
+        targetSdkVersion flutter.targetSdkVersion
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
+    }
+
+    buildTypes {
+        release {
+            // TODO: أضف إعدادات توقيع (signingConfig) خاصة بالنشر الفعلي على
+            // Google Play بدل توقيع التصحيح (debug) هذا قبل إصدار نسخة إنتاجية.
+            signingConfig signingConfigs.debug
+        }
+    }
+}
+
+flutter {
+    source '../..'
+}
+
+dependencies {}
